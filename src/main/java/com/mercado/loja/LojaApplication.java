@@ -36,6 +36,17 @@ public class LojaApplication implements CommandLineRunner{
 		
 		repoCat.saveAll(Arrays.asList(cat1, cat2));
 		repoProd.saveAll(Arrays.asList(p1,p2,p3));
+		repoCat.flush();
+		repoProd.flush();
+		
+		cat1.getProdutos().addAll(Arrays.asList(p1,p2,p3));
+		cat2.getProdutos().add(p2);
+		
+		p1.getCategorias().add(cat1);
+		p2.getCategorias().addAll(Arrays.asList(cat1,cat2));
+		p3.getCategorias().add(cat1);
+		repoCat.saveAll(Arrays.asList(cat1, cat2));
+		repoProd.saveAll(Arrays.asList(p1,p2,p3));
 		
 		
 	}
