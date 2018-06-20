@@ -1,5 +1,6 @@
 package com.mercado.loja.resource;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,7 +19,8 @@ public class CategoriaResource {
 	private CategoriaService service;
 	
 	@GetMapping(value="/{id}")
-	public ResponseEntity<Categoria> buscaPorId(@PathVariable int id){
-		return ResponseEntity.ok().body(service.find(id));
+	public ResponseEntity<Categoria> buscaPorId(@PathVariable Integer id){
+		Categoria obj = service.find(id);
+		return ResponseEntity.ok().body(obj);
 	}
 }

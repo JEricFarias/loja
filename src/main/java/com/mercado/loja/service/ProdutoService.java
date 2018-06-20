@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.mercado.loja.model.Produto;
 import com.mercado.loja.repository.ProdutoRepository;
+import com.mercado.loja.service.exception.ObjectNotFoundException;
 
 @Service
 public class ProdutoService {
@@ -14,7 +15,9 @@ public class ProdutoService {
 	private ProdutoRepository repo;
 	
 	public Produto find(int id) {
-		Optional<Produto> prod = repo.findById(id);
-		return prod.orElse(null);
+		Optional<Produto> produto = repo.findById(id);
+		return produto.orElseThrow(()-> new ObjectNotFoundException(
+				"Porduto não encontrado! id: " + id
+				+", tipo: " + Produto.class.getName()));
 	}
 }
