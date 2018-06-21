@@ -15,50 +15,50 @@ import javax.persistence.ManyToMany;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
-public class Categoria implements Serializable{
+public class Categoria implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private String name;
 	@ManyToMany
-	@JoinTable(name="CATEGORIA_PRODUTO",
-		joinColumns = @JoinColumn(name="categoria_id"),
-		inverseJoinColumns = @JoinColumn(name="produto_id")
-	)
+	@JoinTable(name = "CATEGORIA_PRODUTO", joinColumns = @JoinColumn(name = "categoria_id"), inverseJoinColumns = @JoinColumn(name = "produto_id"))
 	@JsonManagedReference
 	private List<Produto> produtos = new ArrayList<>();
-	
-	public Categoria() {}
-	
-	
+
+	public Categoria() {
+	}
+
 	public Categoria(Integer id, String name) {
 		super();
 		this.id = id;
 		this.name = name;
 	}
 
-
 	public Integer getId() {
 		return id;
 	}
+
 	public void setId(Integer id) {
 		this.id = id;
 	}
+
 	public String getName() {
 		return name;
 	}
+
 	public void setName(String name) {
 		this.name = name;
 	}
+
 	public List<Produto> getProdutos() {
 		return produtos;
 	}
+
 	public void setProdutos(List<Produto> produtos) {
 		this.produtos = produtos;
 	}
-
 
 	@Override
 	public int hashCode() {
@@ -67,6 +67,7 @@ public class Categoria implements Serializable{
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
 	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -83,6 +84,5 @@ public class Categoria implements Serializable{
 			return false;
 		return true;
 	}
-	
-	
+
 }
