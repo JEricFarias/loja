@@ -1,8 +1,11 @@
 package com.mercado.loja.resource;
 
 import java.net.URI;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,9 +14,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.mercado.loja.dto.CategoriaDTO;
 import com.mercado.loja.model.Categoria;
 import com.mercado.loja.service.CategoriaService;
 
@@ -50,5 +55,33 @@ public class CategoriaResource {
 	public ResponseEntity<?> deletar(@PathVariable Integer id){
 		service.delete(id);
 		return ResponseEntity.noContent().build();
+	}
+	
+	@GetMapping
+	public ResponseEntity<List<CategoriaDTO>> buscarTodos(){
+		List<CategoriaDTO> list = service.findAll().stream().map(obj -> new CategoriaDTO(obj)).collect(Collectors.toList());
+		return ResponseEntity.ok().body(list);
+	}
+	
+//	@GetMapping(value = "/page")
+//	public ResponseEntity<Page<CategoriaDTO>> buscarPaginas(
+//			@RequestParam(value = "page", defaultValue = "0") Integer page, 
+//			@RequestParam(value = "linesPerPage", defaultValue = "24") Integer linesPerPage, 
+//			@RequestParam(value = "orderBy", defaultValue = "nome") String orderBy, 
+//			@RequestParam(value = "direction", defaultValue = "ASC")String direction){
+//		Page<Categoria> paginas = service.findAllPages(page, linesPerPage, orderBy, direction);
+//		Page<CategoriaDTO> paginasDTO = paginas.map(obj -> new CategoriaDTO(obj));
+//		return ResponseEntity.ok().body(paginasDTO);
+//	}
+	
+	@GetMapping(value = "/page")
+	public ResponseEntity<Page<CategoriaDTO>> buscarPaginas(
+			@RequestParam(value = "page", defaultValue = "0") Integer page, 
+			@RequestParam(value = "lines-per-page", defaultValue = "24") Integer linesPerPage, 
+			@RequestParam(value = "order-by", defaultValue = "nome") String orderBy, 
+			@RequestParam(value = "direction", defaultValue = "ASC") String direction){
+		 Page<Categoria> pages = service.findAllPages(page, linesPerPage, orderBy, direction);
+		 Page<CategoriaDTO> pagesInfo = pages.map(obj -> new CategoriaDTO(obj));
+		 return ResponseEntity.ok().body(pagesInfo);
 	}
 }
