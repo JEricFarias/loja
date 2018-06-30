@@ -10,6 +10,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
+import com.mercado.loja.dto.CategoriaDTO;
 import com.mercado.loja.model.Categoria;
 import com.mercado.loja.repository.CategoriaRepository;
 import com.mercado.loja.service.exception.IntegrityViolationException;
@@ -61,5 +62,9 @@ public class CategoriaService {
 	public Page<Categoria> findAllPages(Integer page, Integer linesPerPage, String orderBy, String direction){
 		PageRequest pageInfo = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
 		return repo.findAll(pageInfo);
+	}
+
+	public Categoria fromDTO(CategoriaDTO dto) {
+		return new Categoria(dto.getId(), dto.getNome());
 	}
 }
