@@ -2,25 +2,45 @@ package com.mercado.loja.dto;
 
 import java.io.Serializable;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+
+import org.hibernate.validator.constraints.Length;
+
+import com.mercado.loja.service.annotation.ClienteInsert;
+
+@ClienteInsert
 public class ClienteNewDTO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	// Dados cliente
+	@NotEmpty(message = "O campo nome obrigatório")
+	@Length(min = 4, max = 80, message = "O nome deve ter de 5 a 80 caractéris")
 	private String nome;
+	
+	@NotEmpty(message = "O campo nome obrigatório")
+	@Email(message = "Email inválido")
 	private String email;
+	
+	@NotEmpty(message = "O campo cpfOuCnpj obrigatório")
 	private String cpfOuCnpj;
 	private Integer tipoCliente;
 
 	// Endereço
+	@NotEmpty(message = "O campo logradouro obrigatório")
 	private String logradouro;
+	
+	@NotEmpty(message = "O campo número obrigatório")
 	private String numero;
 	private String complemento;
 	private String bairro;
+	@NotEmpty(message = "O campo cep obrigatório")
 	private String cep;
 	private Integer cidade;
 
 	// telefones
+	@NotEmpty(message = "Primeiro telofone é obrigatório")
 	private String telefone1;
 	private String telefone2;
 	private String telefone3;
