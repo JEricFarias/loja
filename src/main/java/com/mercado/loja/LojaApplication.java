@@ -14,7 +14,7 @@ import com.mercado.loja.model.Cliente;
 import com.mercado.loja.model.Endereco;
 import com.mercado.loja.model.Estado;
 import com.mercado.loja.model.ItemPedido;
-import com.mercado.loja.model.PagamenteComBoleto;
+import com.mercado.loja.model.PagamentoComBoleto;
 import com.mercado.loja.model.PagamentoComCartao;
 import com.mercado.loja.model.Pedido;
 import com.mercado.loja.model.Produto;
@@ -143,7 +143,7 @@ public class LojaApplication implements CommandLineRunner {
 		SimpleDateFormat sdfData = new SimpleDateFormat("dd/MM/yyyy");
 		PagamentoComCartao pagto1 = new PagamentoComCartao(null, EstadoPagamento.QUITADO, ped1, 6);
 		ped1.setPagamento(pagto1);
-		PagamenteComBoleto pagto2 = new PagamenteComBoleto(null, EstadoPagamento.PENDENTE, ped2, sdfData.parse("20/10/2017"), null);
+		PagamentoComBoleto pagto2 = new PagamentoComBoleto(null, EstadoPagamento.PENDENTE, ped2, sdfData.parse("20/10/2017"), null);
 		ped2.setPagamento(pagto2);
 		cli1.setPedidos(Arrays.asList(ped1, ped2));
 		

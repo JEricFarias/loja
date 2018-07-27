@@ -16,6 +16,6 @@ import com.mercado.loja.model.Produto;
 @Repository
 public interface ProdutoRepository extends JpaRepository<Produto, Integer> {
 	@Transactional(readOnly=true)
-	@Query("SELECT p FROM Produto p INNER JOIN p.categorias cat WHERE p.nome LIKE %:nome% AND cat IN :categorias")
+	@Query("SELECT DISTINCT p FROM Produto p INNER JOIN p.categorias cat WHERE p.nome LIKE %:nome% AND cat IN :categorias")
 	Page<Produto> BuscaPorCategoriasFragmentosDeNome(@Param("nome") String nome, @Param("categorias") List<Categoria> categorias, Pageable pageRequest);
 }

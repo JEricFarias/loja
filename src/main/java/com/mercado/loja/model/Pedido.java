@@ -33,7 +33,7 @@ public class Pedido implements Serializable {
 	private Endereco enderecoDeEntrega;
 
 	@ManyToOne
-	private Cliente cliente;
+	private Cliente cliente;	
 
 	@OneToMany(mappedBy = "id.pedido")
 	private Set<ItemPedido> itens = new HashSet<>();
@@ -50,6 +50,14 @@ public class Pedido implements Serializable {
 		this.cliente = cliente;
 	}
 
+	public Double getSubtotal() {
+		Double total = 0.0;
+		for(ItemPedido x : this.itens) {
+			total += x.getTotal();
+		}
+		return total;
+	}
+	
 	public Integer getId() {
 		return id;
 	}
