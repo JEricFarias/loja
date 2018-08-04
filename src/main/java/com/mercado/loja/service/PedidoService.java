@@ -10,12 +10,10 @@ import org.springframework.transaction.annotation.Transactional;
 import com.mercado.loja.model.ItemPedido;
 import com.mercado.loja.model.PagamentoComBoleto;
 import com.mercado.loja.model.Pedido;
-import com.mercado.loja.model.Produto;
 import com.mercado.loja.model.enums.EstadoPagamento;
 import com.mercado.loja.repository.ItemPedidoRepository;
 import com.mercado.loja.repository.PagamentoRepository;
 import com.mercado.loja.repository.PedidoRepository;
-import com.mercado.loja.repository.ProdutoRepository;
 import com.mercado.loja.service.exception.ObjectNotFoundException;
 
 @Service
@@ -30,10 +28,13 @@ public class PedidoService {
 	private BoletoService boletoCervice;
 	
 	@Autowired
-	private ProdutoRepository produtoRepository;
+	private ProdutoService produtoService;
 	
 	@Autowired
 	private ItemPedidoRepository itemPredidoRepository;
+	
+	@Autowired
+	private ClienteService clienteService;	
 
 	public Pedido find(Integer id) {
 		Optional<Pedido> pedido = repo.findById(id);
@@ -45,6 +46,7 @@ public class PedidoService {
 	public Pedido insert(Pedido obj) {
 		obj.setId(null);
 		obj.setInstante(new Date());
+		obj.setCliente(clienteService.find(obj.getCliente().getId()));
 		obj.getPagamento().setEstado(EstadoPagamento.PENDENTE);
 		obj.getPagamento().setPedido(obj);
 		if(obj.getPagamento() instanceof PagamentoComBoleto) {
@@ -55,11 +57,12 @@ public class PedidoService {
 		pagamentoRepository.save(obj.getPagamento());
 		for(ItemPedido i : obj.getItens()) {
 			i.setDesconto(0.0);
-			Produto p = produtoRepository.findById(i.getProduto().getId()).get();
-			i.setPreco(p.getPreco());
+			i.setProduto(produtoService.find(i.getProduto().getId()));
+			i.setPreco(i.getProduto().getPreco());
 			i.setPedido(obj);
 		}
 		itemPredidoRepository.saveAll(obj.getItens());
+		System.out.println(obj);
 		return obj;
 	}
 }

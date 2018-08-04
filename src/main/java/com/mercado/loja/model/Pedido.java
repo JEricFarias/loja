@@ -1,8 +1,11 @@
 package com.mercado.loja.model;
 
 import java.io.Serializable;
+import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Locale;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -129,5 +132,29 @@ public class Pedido implements Serializable {
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
+	}
+	
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
+		NumberFormat nf = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
+		
+		builder.append("Pedido número: ");
+		builder.append(id);
+		builder.append(", Instante: ");
+		builder.append(sdf.format(instante));
+		builder.append(", Cliente: ");
+		builder.append(cliente.getNome());
+		builder.append(", Situação do pagamento: ");
+		builder.append(pagamento.getEstado().getDescricao());
+		builder.append("\nDetalhes:\n");
+		for(ItemPedido ip : itens) {
+			builder.append(ip.toString());
+			builder.append("\n");
+		}
+		builder.append("\nTotal: ");
+		builder.append(nf.format(getSubtotal()));
+		return builder.toString();
 	}
 }

@@ -1,6 +1,8 @@
 package com.mercado.loja.model;
 
 import java.io.Serializable;
+import java.text.NumberFormat;
+import java.util.Locale;
 
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
@@ -109,6 +111,21 @@ public class ItemPedido implements Serializable {
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		NumberFormat nf = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
+		
+		builder.append(id.getProduto().getNome());
+		builder.append(", Qte: ");
+		builder.append(quantidade);
+		builder.append(", Preço unitário: ");
+		builder.append(nf.format(preco));
+		builder.append(", Subtotal: ");
+		builder.append(nf.format(getTotal()));
+		return builder.toString();
 	}
 
 }
