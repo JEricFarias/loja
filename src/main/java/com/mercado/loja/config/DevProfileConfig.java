@@ -24,7 +24,7 @@ public class DevProfileConfig {
 	
 	@Bean
 	public boolean initializateDB() throws ParseException {
-		//if (!"create".equals(strategy)) return false;
+		if (!"create".equals(strategy)) return false;
 		db.init();
 		System.out.println("CRIOU o bd");
 		return true;
