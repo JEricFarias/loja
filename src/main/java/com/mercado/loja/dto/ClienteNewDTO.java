@@ -26,7 +26,10 @@ public class ClienteNewDTO implements Serializable {
 	@NotEmpty(message = "O campo cpfOuCnpj obrigatório")
 	private String cpfOuCnpj;
 	private Integer tipoCliente;
-
+	
+	@NotEmpty(message = "O campo senha é abrigatório")
+	private String senha;
+	
 	// Endereço
 	@NotEmpty(message = "O campo logradouro obrigatório")
 	private String logradouro;
@@ -83,6 +86,14 @@ public class ClienteNewDTO implements Serializable {
 
 	public String getLogradouro() {
 		return logradouro;
+	}
+
+	public String getSenha() {
+		return senha;
+	}
+
+	public void setSenha(String senha) {
+		this.senha = senha;
 	}
 
 	public void setLogradouro(String logradouro) {
