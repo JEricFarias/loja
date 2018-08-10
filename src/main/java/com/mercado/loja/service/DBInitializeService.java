@@ -19,6 +19,7 @@ import com.mercado.loja.model.PagamentoComCartao;
 import com.mercado.loja.model.Pedido;
 import com.mercado.loja.model.Produto;
 import com.mercado.loja.model.enums.EstadoPagamento;
+import com.mercado.loja.model.enums.Perfil;
 import com.mercado.loja.model.enums.TipoCliente;
 import com.mercado.loja.repository.CategoriaRepository;
 import com.mercado.loja.repository.CidadeRepository;
@@ -124,13 +125,19 @@ public class DBInitializeService {
 		Cliente cli1 = new Cliente(null, "Eric Farias", "ericfarrias@hotmail.com", "36378912377", TipoCliente.PESSOAFISICA, bcpe.encode("123"));
 		cli1.getTelefones().addAll(Arrays.asList("27363323", "93838393"));
 
+		Cliente cli2 = new Cliente(null, "Guilherme Farias", "mguilhermefs@hotmail.com", "31628382740", TipoCliente.PESSOAFISICA, bcpe.encode("123"));
+		cli2.addPerfil(Perfil.ADMIN);
+		cli2.getTelefones().addAll(Arrays.asList("27363323", "93838393"));
+		
 		Endereco e1 = new Endereco(null, "Rua Flores", "300", "Apto 203", "Jardim", "38220834", cidadeRepo.getOne(1),
 				cli1);
 		Endereco e2 = new Endereco(null, "Avenida Matos", "105", "sala 800", "Centro", "38777012", cidadeRepo.getOne(1),
 				cli1);
+		Endereco e3 = new Endereco(null, "Avenida C", "230", "sala 800", "Metropole", "30077012", cidadeRepo.getOne(1),
+				cli2);
 
-		clienteRepo.save(cli1);
-		enderecoRepo.saveAll(Arrays.asList(e1, e2));
+		clienteRepo.saveAll(Arrays.asList(cli1, cli2));
+		enderecoRepo.saveAll(Arrays.asList(e1, e2, e3));
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 		
