@@ -110,7 +110,7 @@ public class Cliente implements Serializable {
 		this.perfis.add(perfil.getCodigo());
 	}
 
-	public Set<Perfil> getPerfil(){
+	public Set<Perfil> getPerfis(){
 		return this.perfis.stream().map(x -> Perfil.toEnum(x)).collect(Collectors.toSet());
 	}
 	
