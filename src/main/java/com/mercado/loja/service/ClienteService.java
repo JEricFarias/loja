@@ -16,9 +16,12 @@ import com.mercado.loja.dto.ClienteNewDTO;
 import com.mercado.loja.model.Cidade;
 import com.mercado.loja.model.Cliente;
 import com.mercado.loja.model.Endereco;
+import com.mercado.loja.model.enums.Perfil;
 import com.mercado.loja.model.enums.TipoCliente;
 import com.mercado.loja.repository.ClienteRepository;
 import com.mercado.loja.repository.EnderecoRepository;
+import com.mercado.loja.security.UserSS;
+import com.mercado.loja.service.exception.AuthorizationException;
 import com.mercado.loja.service.exception.ObjectNotFoundException;
 
 @Service
@@ -33,6 +36,11 @@ public class ClienteService {
 	private BCryptPasswordEncoder bcpe;
 	
 	public Cliente find(Integer id) {
+		UserSS user = UserService.authenticated();
+		if(user == null || !user.hasRole(Perfil.ADMIN) && !id.equals(user.getId())) {
+			throw new AuthorizationException("Acesso negado!");
+		}
+		
 		Optional<Cliente> cliente = repo.findById(id);
 		return cliente.orElseThrow(()-> new ObjectNotFoundException(
 				"Objeto não encontrado! id: " + id

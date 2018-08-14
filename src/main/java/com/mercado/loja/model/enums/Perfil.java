@@ -1,8 +1,8 @@
 package com.mercado.loja.model.enums;
 
 public enum Perfil {
-	CLIENTE(1, "RULE_CLIENTE"),
-	ADMIN(2, "RULE_ADMIN");
+	CLIENTE(1, "ROLE_CLIENTE"),
+	ADMIN(2, "ROLE_ADMIN");
 	
 	private Integer cod;
 	private String descricao;
