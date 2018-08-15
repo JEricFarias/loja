@@ -14,7 +14,6 @@ public class MockMailService extends AbstractEmailService {
 		LOG.info("Simulando envio de email...");
 		LOG.info(msg.toString());
 		LOG.info("Email enviado...");
-
 	}
 
 	@Override
@@ -22,7 +21,6 @@ public class MockMailService extends AbstractEmailService {
 		LOG.info("Simulando envio de email...");
 		LOG.info(msg.toString());
 		LOG.info("Email enviado...");
-		
 	}
 
 }
